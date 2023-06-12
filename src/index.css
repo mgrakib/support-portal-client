@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+:root{
+    --primary-bg : #060818;
+    --secondary-bg : #0C1427;
+    --light-blue-color : #1B55E2;
+    --danger-color : #E7515A;
+    --primary-color : #2196F3;
+    --white-color : #fff;
+    --green-color : #00947B;
+    --yellow-color : #E2A03F;
+    --gray-color : #494F50;
+    --light-gray-color : #B3B5B5;
+
+    
+}
+
+body{
+    background-color: #070D19;
+}
