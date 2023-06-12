@@ -65,6 +65,7 @@ const Login = () => {
 									</span>
 									{/* include validation with required or other standard HTML validation rules */}
 									<input
+										type="password"
 										{...register("exampleRequired", {
 											required: true,
 										})}

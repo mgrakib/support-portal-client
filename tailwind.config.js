@@ -7,9 +7,11 @@ export default {
 			colors: {
 				"primary-bg": "var(--primary-bg)",
 				"secondary-bg": "var(--secondary-bg)",
+				"ternary-bg": "var(--ternary-bg)",
 				"light-blue-color": "var(--light-blue-color)",
 				"danger-color": "var(--danger-color)",
 				"primary-color": "var(--primary-color)",
+				"secondary-color": "var(--secondary-color)",
 				"white-color": "var(--white-color)",
 				"green-color": "var(--green-color)",
 				"yellow-color": "var(--yellow-color)",
