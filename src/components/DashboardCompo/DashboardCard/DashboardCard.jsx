@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './DashboardCard.css'
 const DashboardCard = ({status, ticketCreate, ticketCount, newTicket, highPriority}) => {
     return (
@@ -6,15 +7,16 @@ const DashboardCard = ({status, ticketCreate, ticketCount, newTicket, highPriori
 				<p className='text-white-color font-semibold'>{status}</p>
 
 				{ticketCreate && (
-					<div>
+					<Link to={"/dashboard/new_ticket"}>
 						<button className='bg-yellow-color text-white-color py-[6px] px-3 rounded-md text-[14px] shadow-[1px_4px_5px_1px_rgba(226,160,63,.5)] hover-effect'>
 							New Ticket
 						</button>
-					</div>
+					</Link>
 				)}
 			</div>
 
-			<div className='py-4'>
+			{/* bottom section  */}
+			<div className='py-4 cursor-pointer'>
 				<div className='flex items-center justify-center'>
 					<div className='w-[80px] h-[80px] flex items-center justify-center text-primary-color bg-ternary-bg rounded-full text-3xl font-bold count-container relative'>
 						{ticketCount ? ticketCount : 0}

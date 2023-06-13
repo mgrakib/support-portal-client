@@ -1,10 +1,81 @@
-import { createContext } from "react";
+/** @format */
 
- const AuthContext= createContext({})
-const AuthProvider = ({children}) => {
+import { createContext, useEffect, useState } from "react";
 
-    const authInfo = {}
-    return (
+import {
+	getAuth,
+	createUserWithEmailAndPassword,
+	updateProfile,
+	signInWithEmailAndPassword,
+	onAuthStateChanged,
+	signOut,
+	GoogleAuthProvider,
+	signInWithPopup,
+} from "firebase/auth";
+
+
+import axios from "axios";
+import { app } from "../Firebase/friebase.config";
+
+export const AuthContext = createContext({});
+const auth = getAuth(app);
+
+const AuthProvider = ({ children }) => {
+	const [user, setUser] = useState(null);
+	const [loading, setLoading] = useState(true);
+
+	// sing up
+	const createUser = (email, password) => {
+		setLoading(true);
+		return createUserWithEmailAndPassword(auth, email, password);
+	};
+
+	// update usr name photo
+	const updateUserNamePhoto = (dName, pURL) => {
+		return updateProfile(auth.currentUser, {
+			displayName: dName,
+			photoURL: pURL,
+		});
+	};
+
+	// login
+	const userLogin = (email, password) => {
+		setLoading(true);
+		return signInWithEmailAndPassword(auth, email, password);
+	};
+
+	const googleProvider = new GoogleAuthProvider();
+
+	const googleLogin = () => {
+		setLoading(true);
+		return signInWithPopup(auth, googleProvider);
+	};
+
+	const logOut = () => {
+		signOut(auth);
+	};
+
+	// onAuthStateChanged
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, currentUser => {
+			setUser(currentUser);
+			setLoading(false);
+		});
+
+		return () => unsubscribe();
+	}, []);
+
+	const authInfo = {
+		user,
+		loading,
+		setLoading,
+		createUser,
+		updateUserNamePhoto,
+		userLogin,
+		googleLogin,
+		logOut
+	};
+	return (
 		<AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
 	);
 };

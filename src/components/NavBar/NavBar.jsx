@@ -35,15 +35,15 @@ const NavBar = () => {
 			<Container>
 				<div>
 					<div className='flex items-center'>
-						<Link>
+						<Link to={"/dashboard"}>
 							<div className='flex items-center gap-2'>
-								<div className='w-[40px]'>
+								<div className='w-[60px] md:w-[40px]'>
 									<img
 										src={logo}
 										alt=''
 									/>
 								</div>
-								<h2 className='text-xl font-bold text-white-color'>
+								<h2 className='hidden md:block text-xl font-bold text-white-color'>
 									NTMC Support System
 								</h2>
 							</div>
@@ -64,7 +64,7 @@ const NavBar = () => {
 									onClick={handelProfileOpen}
 									className='flex items-center gap-2 cursor-pointer relative'
 								>
-									<div className='w-[40px]'>
+									<div className='hidden md:block w-[40px]'>
 										<img
 											src={logo}
 											alt=''
@@ -84,7 +84,7 @@ const NavBar = () => {
 				</div>
 			</Container>
 			<Container>
-				<div className=' bg-ternary-bg flex items-center py-3 rounded-md text-white-color '>
+				<div className=' bg-ternary-bg flex items-center py-4 rounded-md text-white-color text-[14px] my-2 '>
 					<Link className='px-6  border-r flex items-center gap-3 font-semibold'>
 						<AiFillDashboard /> Dashbaord
 					</Link>

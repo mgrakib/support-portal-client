@@ -11,8 +11,10 @@ const Dashboard = () => {
 				<Outlet />
 			</div>
 
+			
+			{/* Footer  */}
 			<Container>
-				<div className='flex items-center justify-between pb-3 text-light-gray-color'>
+				<div className='flex items-center justify-between pb-3 text-light-gray-color text-[10px] md:text-[14px]'>
 					<p>
 						Copyright © 2023{" "}
 						<span className='text-white-color font-bold'>MGR</span>,
