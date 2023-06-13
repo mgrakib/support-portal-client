@@ -14,6 +14,7 @@ export default {
 				"secondary-color": "var(--secondary-color)",
 				"white-color": "var(--white-color)",
 				"green-color": "var(--green-color)",
+				"light-green-color": "var(--light-green-color)",
 				"yellow-color": "var(--yellow-color)",
 				"gray-color": "var(--gray-color)",
 				"light-gray-color": "var(--light-gray-color)",
