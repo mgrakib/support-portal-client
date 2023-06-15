@@ -4,45 +4,84 @@ import { useForm } from "react-hook-form";
 import logo from "../../assets/logo.png";
 import { FaKey, FaUser } from "react-icons/fa";
 import "./SingUp.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 import Loading from "../../components/Loading/Loading";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const SingUp = () => {
-    const { loading } = useAuth();
-    
+	const {loading, setLoading, createUser, updateUserNamePhoto } = useAuth();
+	
+	const [axiosSecure] = useAxiosSecure();
+	const navigate = useNavigate();
+
 	const {
 		register,
 		handleSubmit,
 		watch,
 		formState: { errors },
 	} = useForm();
-    const onSubmit = (data, event) => {
+	const onSubmit = (data, event) => {
 		const image = event.target.image.files[0];
-        const formData = new FormData();
-        formData.append('image', image)
+		const formData = new FormData();
+		formData.append("image", image);
 
-        axios.post(
-			`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOSTING_API}`, formData
-        ).then(res => {
-            const userImgURL = res.data.data.display_url;
-            const { name, email} = data;
-            const userInfo = { name, email, userImgURL }
-            axios.post(``)
-        })
-		
+		axios
+			.post(
+				`https://api.imgbb.com/1/upload?key=${
+					import.meta.env.VITE_IMAGE_HOSTING_API
+				}`,
+				formData
+			)
+			.then(res => {
+				const { name, email, password } = data;
+				const userImgURL = res.data.data.display_url;
+				// const userInfo = { name, email };
+
+				createUser(email, password)
+					.then(createdUser => {
+						updateUserNamePhoto(name, userImgURL)
+							.then(res => {
+								const { displayName, email } = createdUser.user;
+								const userInfo = { displayName, email };
+
+								axiosSecure
+									.post(`create_user`, userInfo)
+									.then(storedUser => {
+										console.log(storedUser)
+										navigate("/dashboard");
+									})
+									.catch(err => {
+										setLoading(false);
+										console.log(err)
+									});
+							})
+							.catch(err => {
+								setLoading(false);
+								console.log(err.message);
+							});
+					})
+					.catch(err => {
+						setLoading(false);
+						console.log(err.message)
+					});
+			});
+
+		// googleLogin()
+		// 	.then(() => {})
+		// 	.catch(err => console.log(err.message));
 	};
 
 	const [isChecked, setIsChecked] = useState(false);
 	const handelCheck = () => {
 		setIsChecked(!isChecked);
-    };
-    const [userImg, setUserImg] = useState('Choose...')
-    const handelImgChange = image => {
-        setUserImg(image.name)
-    }
+	};
+	const [userImg, setUserImg] = useState("Choose...");
+	const handelImgChange = image => {
+		setUserImg(image.name);
+	};
 
 	return (
 		<div className='p-8 md:p-16 w-[95%] md:w-[80%] mx-auto'>
@@ -100,7 +139,7 @@ const SingUp = () => {
 									{/* include validation with required or other standard HTML validation rules */}
 									<input
 										type='password'
-										{...register("exampleRequired", {
+										{...register("password", {
 											required: true,
 										})}
 										placeholder='Password'
@@ -213,6 +252,7 @@ const SingUp = () => {
 								className={`${isChecked ? "block" : "hidden"}`}
 							>
 								<button
+									disabled={loading}
 									type='submit'
 									className='bg-primary-color w-full uppercase font-bold text-2xl text-white-color py-[6px] rounded-md mb-4'
 								>

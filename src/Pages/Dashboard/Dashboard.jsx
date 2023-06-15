@@ -1,10 +1,13 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import Container from "../../components/Container/Container";
+import Processing from "../../components/Loading/Processing";
+import useAuth from "../../hooks/useAuth";
 
 const Dashboard = () => {
+	const { processing } = useAuth();
     return (
-		<div>
+		<div className="relative">
 			<NavBar />
 
 			<div>

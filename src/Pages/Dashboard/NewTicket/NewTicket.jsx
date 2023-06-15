@@ -5,9 +5,17 @@ import imagePreview from '../../../assets/download.svg'
 import { useState } from "react";
 import Button from "../../../components/Button/Button";
 import axios from "axios";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useNavigate } from "react-router-dom";
+import Processing from "../../../components/Loading/Processing";
 
-const NewTicket = () => {
-	// const { user } = useAuth();
+const  NewTicket = () => {
+	const { user } = useAuth();
+	const { axiosSecure } = useAxiosSecure();
+	const navigate = useNavigate();
+	const [process, setPorcess] = useState(false);
+
     const {
 		register,
 		handleSubmit,
@@ -16,13 +24,13 @@ const NewTicket = () => {
 	} = useForm();
 
 	const onSubmit = (data, event) => {
-		
+		setPorcess(true);
 		const form = event.target;
 		const problemImg = form.image.files[0];
 		const fomrData = new FormData();
 		fomrData.append("image", problemImg);
 
-		console.log(data)
+		
 		
 		axios
 			.post(
@@ -34,22 +42,30 @@ const NewTicket = () => {
 				const { description, priority, systemName, ticketSubject } =
 					data;
 				const tokenInfo = {
-					description,
+					description: [{'user': description, 'img': imgURL}],
 					priority,
 					systemName,
 					ticketSubject,
 					date: new Date(),
-					// issuedBy: user?.email,
-
+					issuedBy: user?.displayName,
+					email: user?.email
 				};
+
+				axios
+					.post(`http://localhost:5000/create-ticket`, tokenInfo)
+					.then(ticketData => {
+						navigate("/dashboard");
+					})
+					.catch(error => error);
 				
 			})
 			.catch(err => console.log(err?.message));
 	};
 
+
+
 	const [displayImg, setDisplayImg] = useState(imagePreview);
 	const [uploadPhoto, setUploadPhoto] = useState('Choose...')
-
 	const handelUploadPhotoInfo = image => {
 		const fileReader = new FileReader();
 		fileReader.readAsDataURL(image);
@@ -61,7 +77,7 @@ const NewTicket = () => {
 		
 	}
     return (
-		<div>
+		<div className="relative">
 			<Container>
 				<div className='bg-secondary-bg px-4 py-3 rounded-md'>
 					<h4 className='text-xl text-white-color mb-4 md:mb-6'>

@@ -4,7 +4,10 @@ import DashboardCard from "../../../components/DashboardCompo/DashboardCard/Dash
 import TicketTable from "../../../components/DashboardCompo/TicketTable/TicketTable";
 import './DashboardInfo.css'
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
+import useTickets from "../../../hooks/useTickets";
 const DashboardInfo = () => {
+	const { tickets } = useTickets();
+
     return (
 		<div>
 			<Container>
@@ -68,14 +71,18 @@ const DashboardInfo = () => {
 							</div>
 						</div>
 					</div>
-					<TicketTable />
+
+					{/* ticket display table  */}
+					<TicketTable tickets={tickets} />
 
 					<div className='md:mt-8 mt-4'>
 						<div className='flex items-center justify-center gap-1'>
 							<button className='left-right-btn text-light-gray-color bg-ternary-bg'>
 								<BiLeftArrowAlt />
 							</button>
-							<button className='left-right-btn bg-green-color text-white-color'>1</button>
+							<button className='left-right-btn bg-green-color text-white-color'>
+								1
+							</button>
 							<button className='left-right-btn text-light-gray-color bg-ternary-bg'>
 								<BiRightArrowAlt />
 							</button>

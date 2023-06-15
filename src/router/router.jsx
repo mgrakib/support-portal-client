@@ -7,6 +7,8 @@ import Dashboard from "../Pages/Dashboard/Dashboard";
 import DashboardInfo from "../Pages/Dashboard/DashboardInfo/DashboardInfo";
 import NewTicket from "../Pages/Dashboard/NewTicket/NewTicket";
 import SingUp from "../Pages/SingUp/SingUp";
+import AboutTicket from "../Pages/Dashboard/AboutTicket/AboutTicket";
+import axios from "axios";
 
 const router = createBrowserRouter([
 	{
@@ -32,6 +34,12 @@ const router = createBrowserRouter([
 					{
 						path: "/dashboard/new_ticket",
 						element: <NewTicket />,
+					},
+					{
+						path: "/dashboard/about_ticket/:id",
+						element: <AboutTicket />,
+						loader: ({ params }) =>
+							axios(`http://localhost:5000/get-single-ticket/${params.id}`),
 					},
 				],
 			},

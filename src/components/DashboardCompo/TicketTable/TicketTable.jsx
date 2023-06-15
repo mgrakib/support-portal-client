@@ -1,15 +1,20 @@
+/** @format */
+
 import { AiOutlineEye } from "react-icons/ai";
 import StatusBtn from "./TicketTableCompo/StatusBtn";
 import "./TicktTable.css";
+import moment from "moment/moment";
+import { Link } from "react-router-dom";
 
-const TicketTable = () => {
-    return (
+const TicketTable = ({ tickets }) => {
+	
+	return (
 		<div>
 			<div className='overflow-x-auto'>
 				<table className='table'>
 					{/* head */}
 					<thead>
-						<tr className="text-green-color">
+						<tr className='text-green-color'>
 							<th>S/N</th>
 							<th>TICKET DATE</th>
 							<th>TICKET</th>
@@ -23,72 +28,53 @@ const TicketTable = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{/* row 1 */}
-						<tr className="text-white-color">
-							<td>1</td>
-							<td>2023-06-04 09:52:45</td>
-							<td>NTPIDS0406231066</td>
-							<td>mgrakibbd@gmail.com</td>
-							<td>Md. Golam Rakib</td>
-							<td>NTMC</td>
-							<td>PIDS</td>
-							<td>
-								<div className='w-[10px] h-[10px] bg-danger-color rounded-full mx-auto'></div>
-							</td>
-							<td className='w-[150px]'>
-								<StatusBtn status={"In Progress"} />
-							</td>
+						{tickets.map((ticket, i) => (
+							<tr
+								key={ticket._id}
+								className='text-white-color'
+							>
+								<td>{i + 1}</td>
+								<td>
+									{moment(new Date(ticket.date)).format(
+										"YYYY-MM-DD HH:mm:ss"
+									)}
+								</td>
+								<td>{ticket.ticketID}</td>
+								<td>{ticket.email}</td>
+								<td>{ticket.issuedBy}</td>
+								<td>NTMC</td>
+								<td>{ticket.systemName}</td>
 
-							<td>
-								<button className='mx-auto px-5 py-2 bg-primary-color rounded-md text-white-color hover-effect'>
-									<AiOutlineEye />
-								</button>
-							</td>
-						</tr>
-						{/* row 1 */}
-						<tr className="text-white-color">
-							<td>1</td>
-							<td>2023-06-04 09:52:45</td>
-							<td>NTPIDS0406231066</td>
-							<td>mgrakibbd@gmail.com</td>
-							<td>Md. Golam Rakib</td>
-							<td>NTMC</td>
-							<td>PIDS</td>
-							<td>
-								<div className='w-[10px] h-[10px] bg-danger-color rounded-full mx-auto'></div>
-							</td>
-							<td className='w-[150px]'>
-								<StatusBtn status={"In Progress"} />
-							</td>
+								<td>
+									<div
+										className='tooltip'
+										data-tip={ticket.priority}
+									>
+										<div
+											className={`w-[10px] h-[10px] ${
+												ticket.priority === "high"
+													? "bg-danger-color"
+													: ticket.priority ===
+													  "mediam"
+													? "bg-light-blue-color"
+													: "bg-light-green-color"
+											} rounded-full mx-auto`}
+										></div>
+									</div>
+								</td>
+								<td className='w-[150px]'>
+									<StatusBtn status={ticket.status} />
+								</td>
 
-							<td>
-								<button className='mx-auto px-5 py-2 bg-primary-color rounded-md text-white-color hover-effect'>
-									<AiOutlineEye />
-								</button>
-							</td>
-						</tr>
-						<tr className="text-white-color">
-							<td>1</td>
-							<td>2023-06-04 09:52:45</td>
-							<td>NTPIDS0406231066</td>
-							<td>mgrakibbd@gmail.com</td>
-							<td>Md. Golam Rakib</td>
-							<td>NTMC</td>
-							<td>PIDS</td>
-							<td>
-								<div className='w-[10px] h-[10px] bg-danger-color rounded-full mx-auto'></div>
-							</td>
-							<td className='w-[150px]'>
-								<StatusBtn status={"In Progress"} />
-							</td>
-
-							<td>
-								<button className='mx-auto px-5 py-2 bg-primary-color rounded-md text-white-color hover-effect'>
-									<AiOutlineEye />
-								</button>
-							</td>
-						</tr>
-						
+								<td>
+									<Link to={`/dashboard/about_ticket/${ticket._id}`}>
+										<button className='mx-auto px-5 py-2 bg-primary-color rounded-md text-white-color hover-effect'>
+											<AiOutlineEye />
+										</button>
+									</Link>
+								</td>
+							</tr>
+						))}
 					</tbody>
 				</table>
 			</div>

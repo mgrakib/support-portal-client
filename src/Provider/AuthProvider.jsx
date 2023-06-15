@@ -13,7 +13,6 @@ import {
 	signInWithPopup,
 } from "firebase/auth";
 
-
 import axios from "axios";
 import { app } from "../Firebase/friebase.config";
 
@@ -22,7 +21,8 @@ const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
+	const [processing, setProcessing] = useState(true);
 
 	// sing up
 	const createUser = (email, password) => {
@@ -69,11 +69,13 @@ const AuthProvider = ({ children }) => {
 		user,
 		loading,
 		setLoading,
+		processing,
+		setProcessing,
 		createUser,
 		updateUserNamePhoto,
 		userLogin,
 		googleLogin,
-		logOut
+		logOut,
 	};
 	return (
 		<AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

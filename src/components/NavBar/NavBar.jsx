@@ -10,8 +10,11 @@ import NotificationDropDown from './NotificationDropDown/NotificationDropDown';
 
 import { AiFillDashboard } from "react-icons/ai";
 import { BsQuestionLg } from "react-icons/bs";
+import useAuth from '../../hooks/useAuth';
 
 const NavBar = () => {
+	const { user } = useAuth();
+
     const [profileIsOpen, setProfileIsOpen] = useState(false);
     const [notificationIsOpen, setNotificationIsOpen] = useState(false);
     const handelProfileOpen = event => {
@@ -64,16 +67,16 @@ const NavBar = () => {
 									onClick={handelProfileOpen}
 									className='flex items-center gap-2 cursor-pointer relative'
 								>
-									<div className='hidden md:block w-[40px]'>
+									<div className='hidden rounded-full overflow-hidden md:block w-[40px]'>
 										<img
-											src={logo}
+											src={user?.photoURL}
 											alt=''
 										/>
 									</div>
 									<p className='text-sm text-light-gray-color'>
 										Welcome{" "}
 										<span className='text-secondary-color'>
-											Md. Golam Rakib
+											{user?.displayName}
 										</span>
 									</p>
 								</div>
