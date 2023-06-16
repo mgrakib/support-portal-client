@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import Container from "../../../components/Container/Container";
 import Button from "../../../components/Button/Button";
 import bg from "../../../assets/bg.png"
@@ -6,11 +6,24 @@ import { TbFileDescription } from "react-icons/tb";
 import { useState } from "react";
 import ResponseTicket from "../../../components/ResponseTicket/ResponseTicket";
 import { BsSendFill } from "react-icons/bs";
+import { useQuery } from "react-query";
+import axios from "axios";
+import useAuth from "../../../hooks/useAuth";
 const AboutTicket = () => {
-    const ticket = useLoaderData();
-    // des: [{'user':'rakib'}, {'user':"rupa"},{'admin':"rupa"}]
-    const { ticketSubject, description } = ticket.data;
+	const id = useParams()
+	const { loading} = useAuth();
+	const {data:ticket = [], refetch } = useQuery({
+		queryKey: ['ticket'],
+		enabled: !loading,
+		queryFn: async () => {
+			const result = await axios(
+				`http://localhost:5000/get-single-ticket/${id.id}`
+			)
+			return result.data;
+		}
+	})
 
+    const { ticketSubject, description } = ticket;
     
     let [isOpen, setIsOpen] = useState(false);
 
@@ -56,7 +69,7 @@ const AboutTicket = () => {
 						</div>
 
 						<div className=' relative'>
-							{description.map((item, i) => {
+							{description?.map((item, i) => {
 								console.log(item);
 								if (Object.keys(item)[0] === "user") {
 									return (
@@ -112,7 +125,8 @@ const AboutTicket = () => {
 			<ResponseTicket
 				isOpen={isOpen}
 				closeModal={closeModal}
-				ticket={ticket.data}
+				ticket={ticket}
+				refetch={refetch}
 			/>
 		</div>
 	);

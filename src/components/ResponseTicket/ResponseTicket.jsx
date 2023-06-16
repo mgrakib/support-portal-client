@@ -6,7 +6,8 @@ import img from "../../assets/download.svg";
 import Button from "../Button/Button";
 import axios from "axios";
 
-const ResponseTicket = ({ isOpen, closeModal, ticket }) => {
+const ResponseTicket = ({ isOpen, closeModal, ticket, refetch }) => {
+	console.log(ticket , ' ticl')
 	const role = "admin";
 	const [uploadPhoto, setUploadPhoto] = useState("Choose...");
 	const [photoDisplay, setPhotoDisplay] = useState(img);
@@ -46,14 +47,16 @@ const ResponseTicket = ({ isOpen, closeModal, ticket }) => {
 					responseTicketInfo = { admin: message, img: imageUrl };
 				}
 
-
-				axios.put(
-					`http://localhost:5000/response-ticket/?id=${ticket._id}`,
-					responseTicketInfo
-                ).then(res => {
-                    console.log(res.data)
-                    closeModal();
-                })
+				axios
+					.put(
+						`http://localhost:5000/response-ticket/?id=${ticket._id}`,
+						responseTicketInfo
+					)
+					.then(res => {
+						console.log(res.data);
+						closeModal();
+						refetch();
+					});
 			});
 	};
 

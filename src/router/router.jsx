@@ -43,10 +43,7 @@ const router = createBrowserRouter([
 					{
 						path: "/dashboard/about_ticket/:id",
 						element: <AboutTicket />,
-						loader: ({ params }) =>
-							axios(
-								`http://localhost:5000/get-single-ticket/${params.id}`
-							),
+						
 					},
 				],
 			},
