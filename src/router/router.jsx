@@ -9,6 +9,7 @@ import NewTicket from "../Pages/Dashboard/NewTicket/NewTicket";
 import SingUp from "../Pages/SingUp/SingUp";
 import AboutTicket from "../Pages/Dashboard/AboutTicket/AboutTicket";
 import axios from "axios";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
 	{
@@ -25,7 +26,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/dashboard",
-				element: <Dashboard />,
+				element: (
+					<PrivateRoute>
+						<Dashboard />
+					</PrivateRoute>
+				),
 				children: [
 					{
 						path: "/dashboard",
@@ -39,7 +44,9 @@ const router = createBrowserRouter([
 						path: "/dashboard/about_ticket/:id",
 						element: <AboutTicket />,
 						loader: ({ params }) =>
-							axios(`http://localhost:5000/get-single-ticket/${params.id}`),
+							axios(
+								`http://localhost:5000/get-single-ticket/${params.id}`
+							),
 					},
 				],
 			},

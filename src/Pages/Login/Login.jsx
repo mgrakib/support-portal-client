@@ -1,29 +1,44 @@
 /** @format */
 
 import { useForm } from "react-hook-form";
-import logo from '../../assets/logo.png'
+import logo from "../../assets/logo.png";
 import { FaKey, FaUser } from "react-icons/fa";
-import './Login.css'
-import { Link } from "react-router-dom";
+import "./Login.css";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
-    const {
+	const { userLogin, loading } = useAuth();
+	const navigate = useNavigate();
+	const [error, setError] = useState();
+	const {
 		register,
 		handleSubmit,
 		watch,
 		formState: { errors },
 	} = useForm();
-	const onSubmit = data => console.log(data);
+	const onSubmit = data => {
+		const email = data.email;
+		const password = data.password;
+		userLogin(email, password)
+			.then(res => {
+				navigate("/dashboard");
+			})
+			.catch(err => {
+			
+				setError(err.message);
+			});
+	};
+	
 
-	const [isChecked, setIsChecked] = useState(false)
+	const [isChecked, setIsChecked] = useState(false);
 	const handelCheck = () => {
 		setIsChecked(!isChecked);
-	}
+	};
 
-	console.log(isChecked, 'is chce')
-
-    return (
+	console.log(loading);
+	return (
 		<div className='p-8 md:p-16 w-[95%] md:w-[80%] mx-auto'>
 			<div className='bg-secondary-bg p-4'>
 				<h1 className='text-white-color text-3xl font-bold text-center'>
@@ -52,7 +67,7 @@ const Login = () => {
 									</span>
 									{/* register your input into the hook by invoking the "register" function */}
 									<input
-										{...register("example")}
+										{...register("email")}
 										placeholder='Username'
 										className='outline-none bg-transparent py-2 placeholder:text-light-gray-color text-white-color px-4 w-full'
 									/>
@@ -65,18 +80,23 @@ const Login = () => {
 									</span>
 									{/* include validation with required or other standard HTML validation rules */}
 									<input
-										type="password"
-										{...register("exampleRequired", {
-											required: true,
-										})}
+										type='password'
+										{...register("password")}
 										placeholder='Password'
 										className='outline-none bg-transparent py-2 placeholder:text-light-gray-color text-white-color px-4 w-full'
 									/>
 									{/* errors will return when field validation fails  */}
-									{errors.exampleRequired && (
+									{errors.password && (
 										<span>This field is required</span>
 									)}
 								</div>
+								{error && (
+									<p>
+										<small className='text-red-500'>
+											{error}
+										</small>
+									</p>
+								)}
 							</div>
 
 							{/* warning  */}
@@ -178,4 +198,3 @@ const Login = () => {
 };
 
 export default Login;
-

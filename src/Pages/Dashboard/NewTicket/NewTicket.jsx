@@ -29,8 +29,6 @@ const  NewTicket = () => {
 		const problemImg = form.image.files[0];
 		const fomrData = new FormData();
 		fomrData.append("image", problemImg);
-
-		
 		
 		axios
 			.post(
@@ -77,7 +75,7 @@ const  NewTicket = () => {
 		
 	}
     return (
-		<div className="relative">
+		<div >
 			<Container>
 				<div className='bg-secondary-bg px-4 py-3 rounded-md'>
 					<h4 className='text-xl text-white-color mb-4 md:mb-6'>

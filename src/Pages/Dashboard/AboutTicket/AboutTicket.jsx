@@ -5,7 +5,7 @@ import bg from "../../../assets/bg.png"
 import { TbFileDescription } from "react-icons/tb";
 import { useState } from "react";
 import ResponseTicket from "../../../components/ResponseTicket/ResponseTicket";
-
+import { BsSendFill } from "react-icons/bs";
 const AboutTicket = () => {
     const ticket = useLoaderData();
     // des: [{'user':'rakib'}, {'user':"rupa"},{'admin':"rupa"}]
@@ -37,7 +37,7 @@ const AboutTicket = () => {
 						<div>
 							<span onClick={openModal}>
 								<Button
-									data={"akib"}
+									data={<BsSendFill />}
 									bg={"bg-light-blue-color"}
 									textColor={"text-white-color"}
 								/>
@@ -62,7 +62,7 @@ const AboutTicket = () => {
 									return (
 										<div
 											key={i}
-											className='mt-3 bg-primary-bg max-w-[60%] px-3 py-2'
+											className='mt-3 bg-primary-bg md:max-w-[60%] px-3 py-2 rounded-md'
 										>
 											<p className='inline-block   '>
 												{item.user}
@@ -83,21 +83,23 @@ const AboutTicket = () => {
 									return (
 										<div
 											key={i}
-											className='flex justify-end mt-3'
+											className='flex  justify-end mt-3'
 										>
-											<p className='inline-block bg-gray-color  max-w-[60%] px-3 py-1 text-justify'>
-												{item.admin}
-											</p>
+											<div className='bg-gray-color  md:max-w-[60%] px-3 py-1 rounded-md'>
+												<p className='inline-block  text-justify'>
+													{item.admin}
+												</p>
 
-											{item.img && (
-												<div>
-													<img
-														src={item.img}
-														alt=''
-														className='w-[50%] mt-2'
-													/>
-												</div>
-											)}
+												{item.img && (
+													<div>
+														<img
+															src={item.img}
+															alt=''
+															className='w-[50%] mt-2'
+														/>
+													</div>
+												)}
+											</div>
 										</div>
 									);
 								}

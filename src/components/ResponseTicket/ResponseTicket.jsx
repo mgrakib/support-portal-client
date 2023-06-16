@@ -7,7 +7,7 @@ import Button from "../Button/Button";
 import axios from "axios";
 
 const ResponseTicket = ({ isOpen, closeModal, ticket }) => {
-	const role = "user";
+	const role = "admin";
 	const [uploadPhoto, setUploadPhoto] = useState("Choose...");
 	const [photoDisplay, setPhotoDisplay] = useState(img);
 
