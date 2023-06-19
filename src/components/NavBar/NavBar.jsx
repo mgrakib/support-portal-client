@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png'
 import Container from '../Container/Container';
-import { FaRegBell } from 'react-icons/fa';
+import { FaRegBell, FaUsersCog } from 'react-icons/fa';
 
 import { useState } from 'react';
 import ProfileDropDown from './ProfileDropDown/ProfileDropDown';
@@ -10,6 +10,7 @@ import NotificationDropDown from './NotificationDropDown/NotificationDropDown';
 
 import { AiFillDashboard } from "react-icons/ai";
 import { BsQuestionLg } from "react-icons/bs";
+
 import useAuth from '../../hooks/useAuth';
 
 const NavBar = () => {
@@ -28,6 +29,7 @@ const NavBar = () => {
         setProfileIsOpen(false);
 	};
 
+	const role = 'admin'
     return (
 		<div
 			onClick={() => {
@@ -95,6 +97,14 @@ const NavBar = () => {
 					<Link className='px-6 flex items-center gap-3 font-semibold'>
 						<BsQuestionLg /> FAQ
 					</Link>
+					{role && (
+						<Link
+							to={"/dashboard/manage-user"}
+							className='px-6 border-l flex items-center gap-3 font-semibold'
+						>
+							<FaUsersCog /> Manage User
+						</Link>
+					)}
 				</div>
 			</Container>
 		</div>

@@ -10,6 +10,7 @@ import SingUp from "../Pages/SingUp/SingUp";
 import AboutTicket from "../Pages/Dashboard/AboutTicket/AboutTicket";
 import axios from "axios";
 import PrivateRoute from "./PrivateRoute";
+import ManageUsers from "../Pages/AdminPages/ManageUsers/ManageUsers";
 
 const router = createBrowserRouter([
 	{
@@ -43,6 +44,11 @@ const router = createBrowserRouter([
 					{
 						path: "/dashboard/about_ticket/:id",
 						element: <AboutTicket />,
+						
+					},
+					{
+						path: "/dashboard/manage-user",
+						element: <ManageUsers />,
 						
 					},
 				],

@@ -50,7 +50,7 @@ const SingUp = () => {
 								axiosSecure
 									.post(`create_user`, userInfo)
 									.then(storedUser => {
-										console.log(storedUser)
+										
 										navigate("/dashboard");
 									})
 									.catch(err => {
@@ -69,9 +69,7 @@ const SingUp = () => {
 					});
 			});
 
-		// googleLogin()
-		// 	.then(() => {})
-		// 	.catch(err => console.log(err.message));
+		
 	};
 
 	const [isChecked, setIsChecked] = useState(false);

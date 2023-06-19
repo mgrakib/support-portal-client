@@ -1,41 +1,85 @@
+/** @format */
+
 import { BsSearch } from "react-icons/bs";
 import Container from "../../../components/Container/Container";
 import DashboardCard from "../../../components/DashboardCompo/DashboardCard/DashboardCard";
 import TicketTable from "../../../components/DashboardCompo/TicketTable/TicketTable";
-import './DashboardInfo.css'
+import "./DashboardInfo.css";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
-import useTickets from "../../../hooks/useTickets";
+import useTicketStatus from "../../../hooks/useTicketStatus";
+import useAllTicket from "../../../hooks/useAllTicket";
+import useUserTickets from "../../../hooks/useTickets";
+import useTotalTicket from "../../../hooks/useTotalTicket";
 const DashboardInfo = () => {
-	const { tickets } = useTickets();
 
-    return (
+	const role = 'admin'
+
+	const { tickets } = useUserTickets();
+	const { totalStatus } = useTicketStatus();
+	const { totalTicket } = useTotalTicket();
+	
+
+	return (
 		<div>
 			<Container>
 				<div className='grid  md:grid-cols-4 gap-6'>
 					<DashboardCard
 						status={"Open"}
 						ticketCreate={true}
-						ticketCount={5}
-						newTicket={3}
-						highPriority={5}
+						ticketCount={
+							totalStatus?.openStatusResult?.[0]?.count
+								? totalStatus?.openStatusResult?.[0]?.count
+								: 0
+						}
+						newTicket={0}
+						highPriority={
+							totalStatus?.openHighStatusRestult?.[0]?.count
+								? totalStatus?.openHighStatusRestult?.[0]?.count
+								: 0
+						}
 					/>
 					<DashboardCard
 						status={"Answered"}
-						ticketCount={5}
+						ticketCount={
+							totalStatus?.answeredStatusResult?.[0]?.count
+								? totalStatus?.answeredStatusResult?.[0]?.count
+								: 0
+						}
 						newTicket={3}
-						highPriority={5}
+						highPriority={
+							totalStatus?.answeredHighStatusRestult?.[0]?.count
+								? totalStatus?.answeredHighStatusRestult?.[0]
+										.count
+								: 0
+						}
 					/>
 					<DashboardCard
 						status={"In Progress"}
-						ticketCount={5}
+						ticketCount={
+							totalStatus?.inprogressStatusResult?.[0]?.count
+								? totalStatus?.inprogressStatusResult?.[0]?.count
+								: 0
+						}
 						newTicket={3}
-						highPriority={5}
+						highPriority={
+							totalStatus?.inprogressHighStatusRestult?.[0]?.count
+								? totalStatus?.inprogressHighStatusRestult?.[0]?.count
+								: 0
+						}
 					/>
 					<DashboardCard
 						status={"Close"}
-						ticketCount={5}
+						ticketCount={
+							totalStatus?.closeStatusResult?.[0]?.count
+								? totalStatus?.closeStatusResult?.[0]?.count
+								: 0
+						}
 						newTicket={3}
-						highPriority={5}
+						highPriority={
+							totalStatus?.closeHighStatusRestult?.[0]?.count
+								? totalStatus?.closeHighStatusRestult?.[0]?.count
+								: 0
+						}
 					/>
 				</div>
 

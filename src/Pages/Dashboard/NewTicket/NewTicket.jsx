@@ -10,9 +10,11 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
 import Processing from "../../../components/Loading/Processing";
 
+
 const  NewTicket = () => {
 	const { user } = useAuth();
-	const { axiosSecure } = useAxiosSecure();
+
+	const [axiosSecure] = useAxiosSecure();
 	const navigate = useNavigate();
 	const [process, setPorcess] = useState(false);
 
@@ -24,6 +26,7 @@ const  NewTicket = () => {
 	} = useForm();
 
 	const onSubmit = (data, event) => {
+		console.log('first')
 		setPorcess(true);
 		const form = event.target;
 		const problemImg = form.image.files[0];
@@ -35,8 +38,11 @@ const  NewTicket = () => {
 				`https://api.imgbb.com/1/upload?key=24a1de6c18194b08379129ea976349a9`,
 				fomrData
 			)
-			.then(res => {
+			.then(async res => {
+				
 				const imgURL = res?.data.data.display_url;
+
+		
 				const { description, priority, systemName, ticketSubject } =
 					data;
 				const tokenInfo = {
@@ -49,15 +55,21 @@ const  NewTicket = () => {
 					email: user?.email
 				};
 
-				axios
-					.post(`http://localhost:5000/create-ticket`, tokenInfo)
+				console.log(tokenInfo, ' rakib');
+				
+				await axiosSecure
+					.post(`create-ticket`, tokenInfo)
 					.then(ticketData => {
+
 						navigate("/dashboard");
 					})
 					.catch(error => error);
 				
 			})
-			.catch(err => console.log(err?.message));
+			.catch(err => {
+				setPorcess(false);
+				console.log(err?.message)
+			});
 	};
 
 
@@ -213,6 +225,7 @@ const  NewTicket = () => {
 							<div className='mb-2'>
 								<div type='submit'>
 									<Button
+										disabled={process}
 										data={"Submit"}
 										bg={"bg-light-green-color"}
 										textColor={"text-white-color"}

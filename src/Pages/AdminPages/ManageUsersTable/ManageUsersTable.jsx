@@ -1,12 +1,12 @@
 /** @format */
 
 import { AiOutlineEye } from "react-icons/ai";
-import StatusBtn from "./TicketTableCompo/StatusBtn";
-import "./TicktTable.css";
+
+import "./ManageUsersTable.css";
 import moment from "moment/moment";
 import { Link } from "react-router-dom";
 
-const TicketTable = ({ tickets }) => {
+const ManageUsersTable = () => {
 	return (
 		<div>
 			<div className='overflow-x-auto'>
@@ -26,7 +26,7 @@ const TicketTable = ({ tickets }) => {
 							<th>ACTION</th>
 						</tr>
 					</thead>
-					<tbody>
+					{/* <tbody>
 						{tickets.map((ticket, i) => (
 							<tr
 								key={ticket._id}
@@ -76,11 +76,11 @@ const TicketTable = ({ tickets }) => {
 								</td>
 							</tr>
 						))}
-					</tbody>
+					</tbody> */}
 				</table>
 			</div>
 		</div>
 	);
 };
 
-export default TicketTable;
+export default ManageUsersTable;

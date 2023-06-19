@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import './DashboardCard.css'
-const DashboardCard = ({status, ticketCreate, ticketCount, newTicket, highPriority}) => {
+const DashboardCard = ({ status, ticketCreate, ticketCount, newTicket, highPriority }) => {
+	
+	
     return (
 		<div className='bg-secondary-bg rounded-md'>
 			<div className='flex items-center justify-between py-8 px-4 border-b border-dashed border-gray-color'>
@@ -16,7 +18,10 @@ const DashboardCard = ({status, ticketCreate, ticketCount, newTicket, highPriori
 			</div>
 
 			{/* bottom section  */}
-			<div className='py-4 cursor-pointer'>
+			<div
+				
+				className='py-4 cursor-pointer'
+			>
 				<div className='flex items-center justify-center'>
 					<div className='w-[80px] h-[80px] flex items-center justify-center text-primary-color bg-ternary-bg rounded-full text-3xl font-bold count-container relative'>
 						{ticketCount ? ticketCount : 0}

@@ -9,16 +9,18 @@ import { BsSendFill } from "react-icons/bs";
 import { useQuery } from "react-query";
 import axios from "axios";
 import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const AboutTicket = () => {
+	const [axiosSecure] = useAxiosSecure();
 	const id = useParams()
 	const { loading} = useAuth();
 	const {data:ticket = [], refetch } = useQuery({
 		queryKey: ['ticket'],
 		enabled: !loading,
 		queryFn: async () => {
-			const result = await axios(
-				`http://localhost:5000/get-single-ticket/${id.id}`
-			)
+			const result = await axiosSecure(
+				`get-single-ticket/${id.id}`
+			);
 			return result.data;
 		}
 	})
@@ -70,7 +72,7 @@ const AboutTicket = () => {
 
 						<div className=' relative'>
 							{description?.map((item, i) => {
-								console.log(item);
+								
 								if (Object.keys(item)[0] === "user") {
 									return (
 										<div

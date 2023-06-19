@@ -37,7 +37,6 @@ const Login = () => {
 		setIsChecked(!isChecked);
 	};
 
-	console.log(loading);
 	return (
 		<div className='p-8 md:p-16 w-[95%] md:w-[80%] mx-auto'>
 			<div className='bg-secondary-bg p-4'>

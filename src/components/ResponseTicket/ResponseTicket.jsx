@@ -7,7 +7,7 @@ import Button from "../Button/Button";
 import axios from "axios";
 
 const ResponseTicket = ({ isOpen, closeModal, ticket, refetch }) => {
-	console.log(ticket , ' ticl')
+	
 	const role = "admin";
 	const [uploadPhoto, setUploadPhoto] = useState("Choose...");
 	const [photoDisplay, setPhotoDisplay] = useState(img);
@@ -53,7 +53,7 @@ const ResponseTicket = ({ isOpen, closeModal, ticket, refetch }) => {
 						responseTicketInfo
 					)
 					.then(res => {
-						console.log(res.data);
+						
 						closeModal();
 						refetch();
 					});
