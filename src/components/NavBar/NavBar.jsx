@@ -12,6 +12,7 @@ import { AiFillDashboard } from "react-icons/ai";
 import { BsQuestionLg } from "react-icons/bs";
 
 import useAuth from '../../hooks/useAuth';
+import useRole from '../../hooks/useRole';
 
 const NavBar = () => {
 	const { user } = useAuth();
@@ -29,7 +30,8 @@ const NavBar = () => {
         setProfileIsOpen(false);
 	};
 
-	const role = 'admin'
+	const { role } = useRole();
+
     return (
 		<div
 			onClick={() => {
@@ -97,7 +99,7 @@ const NavBar = () => {
 					<Link className='px-6 flex items-center gap-3 font-semibold'>
 						<BsQuestionLg /> FAQ
 					</Link>
-					{role && (
+					{role === 'admin' && (
 						<Link
 							to={"/dashboard/manage-user"}
 							className='px-6 border-l flex items-center gap-3 font-semibold'

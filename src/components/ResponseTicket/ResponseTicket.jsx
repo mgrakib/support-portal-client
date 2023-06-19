@@ -5,10 +5,12 @@ import { Fragment, useState } from "react";
 import img from "../../assets/download.svg";
 import Button from "../Button/Button";
 import axios from "axios";
+import useRole from "../../hooks/useRole";
 
 const ResponseTicket = ({ isOpen, closeModal, ticket, refetch }) => {
 	
-	const role = "admin";
+	const { role } = useRole();
+
 	const [uploadPhoto, setUploadPhoto] = useState("Choose...");
 	const [photoDisplay, setPhotoDisplay] = useState(img);
 
@@ -24,6 +26,7 @@ const ResponseTicket = ({ isOpen, closeModal, ticket, refetch }) => {
 
 	const handelSubmit = event => {
 		event.preventDefault();
+		console.log('first')
 		const form = event.target;
 		const message = form.newMessage.value;
 		const image = form.image.files[0];
@@ -40,6 +43,8 @@ const ResponseTicket = ({ isOpen, closeModal, ticket, refetch }) => {
 			)
 			.then(res => {
 				const imageUrl = res.data.data.display_url;
+
+				console.log(imageUrl)
 				let responseTicketInfo;
 				if (role === "user") {
 					responseTicketInfo = { user: message, img: imageUrl };
@@ -47,6 +52,7 @@ const ResponseTicket = ({ isOpen, closeModal, ticket, refetch }) => {
 					responseTicketInfo = { admin: message, img: imageUrl };
 				}
 
+				console.log(responseTicketInfo , '  rakib')
 				axios
 					.put(
 						`http://localhost:5000/response-ticket/?id=${ticket._id}`,
